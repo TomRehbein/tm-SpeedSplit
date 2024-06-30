@@ -17,13 +17,14 @@ namespace CheckPoint {
 			preCPIdx = player.CurrentLaunchedRespawnLandmarkIndex;
 			auto landmark = landmarks[preCPIdx];
 			if (landmark.Waypoint is null) {
-			} else if (landmark.Waypoint.IsMultiLap) {
-                MultiLab();
-            } else if (landmark.Waypoint.IsFinish) {
+                return;
+			} 
+            
+            if (landmark.Waypoint.IsFinish) {
                 Finish();
 			} else {
                 CheckPoint();
-			}
+            }
 		}
     }
 
@@ -35,10 +36,5 @@ namespace CheckPoint {
     void Finish() {
         // finish is reached. Get total time and update PB if needed
         print("Finish reached");
-    }
-
-    void MultiLab() {
-        // multi lap is reached. Get split time and update PB if needed
-        print("Multi lap reached");
     }
 }
