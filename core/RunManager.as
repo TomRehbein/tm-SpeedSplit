@@ -20,11 +20,9 @@ namespace RunManager {
     }
 
     void Update() {
-        auto app = GetApp();
-        if (app is null || app.CurrentPlayground is null) {
-            return;
-        }
+        if (GameState::State != "game") return;
 
+        auto app = GetApp();
         auto playground = cast<CSmArenaClient>(app.CurrentPlayground);
         auto sequence = playground.GameTerminals[0].UISequence_Current;
         auto playgroundScript = cast<CSmArenaRulesMode>(app.PlaygroundScript);

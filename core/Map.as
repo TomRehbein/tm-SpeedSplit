@@ -6,9 +6,9 @@ namespace Map {
     void Main() {}
 
     void Update() {
-        auto app = GetApp();
-        if (app.CurrentPlayground is null) return;
+        if (GameState::State != "game") return;
 
+        auto app = GetApp();
         string currentMapId = app.RootMap.MapInfo.MapUid;
         if (currentMapId == mapId) return;
 

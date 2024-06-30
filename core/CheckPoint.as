@@ -2,8 +2,9 @@ namespace Checkpoint {
     uint preCPIdx = 0;
 
     void Update() {
+        if (GameState::State != "game") return;
+
         auto app = GetApp();
-        if (app.CurrentPlayground is null) return;
 
         auto playground = cast<CSmArenaClient>(app.CurrentPlayground);
         auto player = cast<CSmPlayer>(playground.GameTerminals[0].GUIPlayer);
