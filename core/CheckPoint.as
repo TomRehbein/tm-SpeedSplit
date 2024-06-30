@@ -5,26 +5,40 @@ namespace Checkpoint {
         if (GameState::State != "game") return;
 
         auto app = GetApp();
-
         auto playground = cast<CSmArenaClient>(app.CurrentPlayground);
+        if (playground is null) return;
+
         auto player = cast<CSmPlayer>(playground.GameTerminals[0].GUIPlayer);
+        if (player is null) return;
+
 
         MwFastBuffer<CGameScriptMapLandmark@> landmarks = playground.Arena.MapLandmarks;
         if(preCPIdx != player.CurrentLaunchedRespawnLandmarkIndex && landmarks.Length > player.CurrentLaunchedRespawnLandmarkIndex) {
 			preCPIdx = player.CurrentLaunchedRespawnLandmarkIndex;
 			auto landmark = landmarks[preCPIdx];
 			if (landmark.Waypoint is null) {
-				// print("START BLOCK TMNEXT");
-			} else if (landmark.Waypoint.IsFinish || landmark.Waypoint.IsMultiLap) {
-				// Map::HandleCheckpoint();
-				// print("FINISH or MULTILAP BLOCK TMNEXT");
+			} else if (landmark.Waypoint.IsMultiLap) {
+                MultiLab();
+            } else if (landmark.Waypoint.IsFinish) {
+                Finish();
 			} else {
-				// Map::HandleCheckpoint();
+                CheckPoint();
 			}
 		}
     }
 
     void CheckPoint() {
         // checkpoint is reached. Get split time and update PB if needed
+        print("Checkpoint reached");
+    }
+
+    void Finish() {
+        // finish is reached. Get total time and update PB if needed
+        print("Finish reached");
+    }
+
+    void MultiLab() {
+        // multi lap is reached. Get split time and update PB if needed
+        print("Multi lap reached");
     }
 }
