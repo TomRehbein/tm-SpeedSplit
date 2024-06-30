@@ -13,6 +13,12 @@ namespace Map {
         if (currentMapId == mapId) return;
 
         mapId = currentMapId;
+        print("Map changed to: " + mapId);
+        if (!IO::FileExists("map_" + mapId + ".json")) {
+            pbSplits = {};
+            return;
+        }
+
         pb = DataManager("map_" + mapId);
         Json::Value pbData = pb.LoadData();
 
