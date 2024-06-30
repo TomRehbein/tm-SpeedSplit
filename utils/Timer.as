@@ -1,16 +1,30 @@
 namespace Timer {
+    // needs to be improved! Its not accurate enough
     uint GetRunTime() {
         auto app = GetApp();
+        if (app is null) return 0;
+
         auto playground = cast<CSmArenaClient>(app.CurrentPlayground);
+        if (playground is null) return 0;
+
         auto player = cast<CSmPlayer>(playground.GameTerminals[0].GUIPlayer);
-        auto scriptPlayer = player is null ? null : cast<CSmScriptPlayer>(player.ScriptAPI);
+        if (player is null) return 0;
+
+        CSmScriptPlayer@ scriptPlayer = cast<CSmScriptPlayer>(player.ScriptAPI);
         auto playgroundScript = cast<CSmArenaRulesMode>(app.PlaygroundScript);
+
+        uint currentTime = 0;
 
         // online check
         if (playgroundScript is null) {
-            return app.Network.PlaygroundClientScriptAPI.GameTime - scriptPlayer.StartTime;
+            currentTime = app.Network.PlaygroundClientScriptAPI.GameTime;
         } else {
-            return playgroundScript.Now - scriptPlayer.StartTime;
+            currentTime = playgroundScript.Now;
         }
+
+        uint startTime = scriptPlayer.StartTime;
+        uint runTime = currentTime - startTime;
+
+        return runTime;
     }
 }
