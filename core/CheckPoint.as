@@ -1,4 +1,4 @@
-namespace Checkpoint {
+namespace CheckPoint {
     uint preCPIdx = 0;
 
     void Update() {
