@@ -1,7 +1,10 @@
 namespace Map {
     string mapId = "";
-    DataManager@ pb = null;
+    DataManager@ mapData = null;
+
     array<uint> pbSplits = {};
+    array<uint> bestSplits = {};
+    array<uint> currentSplits = {};
 
     void Main() {}
 
@@ -19,8 +22,8 @@ namespace Map {
             return;
         }
 
-        pb = DataManager("map_" + mapId);
-        Json::Value pbData = pb.LoadData();
+        mapData = DataManager("map_" + mapId);
+        Json::Value pbData = mapData.LoadData();
 
         if (pbData.GetType() == Json::Type::Null) {
             print("No PB data found for map: " + mapId);
@@ -28,6 +31,38 @@ namespace Map {
         }
 
         pbSplits = array<uint>(pbData["pbSplits"]);
+        bestSplits = array<uint>(pbData["bestSplits"]);
         print("Loaded PB data for map: " + mapId);
+    }
+
+    void HandleCheckPoint() {
+        currentSplits.InsertLast(Timer::GetRunTime());
+    }
+
+    void HandleReset() {
+        currentSplits = {};
+    }
+
+    void HandleFinish() {
+        if (currentSplits.Length == 0) return;
+
+        if (pbSplits.Length == 0) {
+            pbSplits = currentSplits;
+            print("New PB set!");
+        } else {
+            bool newPB = false;
+            for (uint i = 0; i < currentSplits.Length; i++) {
+                if (currentSplits[i] < pbSplits[i]) {
+                    pbSplits[i] = currentSplits[i];
+                    newPB = true;
+                }
+            }
+
+            if (newPB) {
+                print("New PB set!");
+            }
+        }
+
+        currentSplits = {};
     }
 }
