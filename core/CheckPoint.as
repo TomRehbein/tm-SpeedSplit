@@ -30,7 +30,7 @@ namespace CheckPoint {
 
     void CheckPoint() {
         // checkpoint is reached. Get split time and update PB if needed
-        print("Checkpoint reached");
+        print("Time: " + Timer::GetRunTime());
     }
 
     void Finish() {

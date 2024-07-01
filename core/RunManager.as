@@ -1,9 +1,4 @@
 namespace RunManager {
-    bool finished = false;
-    bool retiered = false;
-    uint RaceTime = 0;
-    uint prevRaceTime = 0;
-
     void Update() {
         if (GameState::State != "game") return;
 
