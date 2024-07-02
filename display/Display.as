@@ -31,16 +31,34 @@ namespace Display {
     }
 
     void RenderTable() {
-        UI::BeginTable("SpeedSplitTable", 2, UI::TableFlags::Resizable | UI::TableFlags::BordersInnerV | UI::TableFlags::NoHostExtendX | UI::TableFlags::NoPadOuterX | UI::TableFlags::NoBordersInBody | UI::TableFlags::NoBordersInBodyUntilResize);
-        RenderSplit();
+        UI::BeginTable("SpeedSplitTable", 3, UI::TableFlags::Resizable | UI::TableFlags::BordersInnerV | UI::TableFlags::NoHostExtendX | UI::TableFlags::NoPadOuterX | UI::TableFlags::NoBordersInBody | UI::TableFlags::NoBordersInBodyUntilResize);
+        if (Map::pbSplits.Length == 0) {
+            UI::TableNextRow();
+            UI::TableNextColumn();
+            UI::Text("No splits found");
+        } else {
+            RenderSplits();
+        }
         UI::EndTable();
     }
 
-    void RenderSplit() {
+    void RenderSplits() {
+        for (uint i = 0; i < Map::pbSplits.Length; i++) {
+            uint currentSplit = 0;
+            if (Map::currentSplits.Length > i) {
+                currentSplit = Map::currentSplits[i];
+            }
+            RenderSplit(i + 1, currentSplit, Map::pbSplits[i]);
+        }
+    }
+
+    void RenderSplit(uint splitIndex = 0, uint splitTime = 0, uint pbTime = 0) {
         UI::TableNextRow();
         UI::TableNextColumn();
-        UI::Text("1. CP");
+        UI::Text(splitIndex + ". CP");
         UI::TableNextColumn();
-        UI::Text("Time");
+        UI::Text("" + splitTime);
+        UI::TableNextColumn();
+        UI::Text("" + pbTime);
     }
 }
