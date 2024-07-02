@@ -1,4 +1,6 @@
 namespace RunManager {
+    bool retired = false;
+
     void Update() {
         if (GameState::State != "game") return;
 
@@ -12,8 +14,12 @@ namespace RunManager {
         auto scriptPlayer = cast<CSmScriptPlayer>(player.ScriptAPI);
         CSmScriptPlayer::EPost post = scriptPlayer.Post;
 
-        // Detect start
-        // Detect finish
-        // Detect retiered
+        // Detect retire
+        if (!retired && post == CSmScriptPlayer::EPost::Char) {
+            retired = true;
+        } else if (retired && post != CSmScriptPlayer::EPost::CarDriver) {
+            Map::HandleReset();
+            retired = false;
+        }
     }
 }
