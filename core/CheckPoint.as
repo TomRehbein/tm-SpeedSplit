@@ -21,20 +21,10 @@ namespace CheckPoint {
 			} 
             
             if (landmark.Waypoint.IsFinish) {
-                Finish();
+                Map::HandleFinish();
 			} else {
-                CheckPoint();
+                Map::HandleCheckPoint();
             }
 		}
-    }
-
-    void CheckPoint() {
-        // checkpoint is reached. Get split time and update PB if needed
-        print("Time: " + Timer::GetRunTime());
-    }
-
-    void Finish() {
-        // finish is reached. Get total time and update PB if needed
-        print("Finish reached");
     }
 }
