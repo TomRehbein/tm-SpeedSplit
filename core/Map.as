@@ -36,11 +36,14 @@ namespace Map {
     }
 
     void HandleCheckPoint() {
-        currentSplits.InsertLast(Timer::GetRunTime());
+        uint time = Timer::GetRunTime();
+        currentSplits.InsertLast(time);
+        print("CP: " + time);
     }
 
     void HandleReset() {
         currentSplits = {};
+        print("Run reset");
     }
 
     void HandleFinish() {
