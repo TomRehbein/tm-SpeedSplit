@@ -4,7 +4,6 @@ class DataManager {
 
     DataManager(const string &in _filename) {
         filename = _filename + ".json";
-        data = LoadData();
     }
 
     void SaveData(const Json::Value &in newData) {
@@ -42,5 +41,25 @@ class DataManager {
 namespace DataManager {
     DataManager@ Get(const string &in filename) {
         return DataManager(filename);
+    }
+
+    Json::Value ArrayToJson(array<uint> &in arr) {
+        Json::Value jsonArray = Json::Array();
+        for (uint i = 0; i < arr.Length; i++) {
+            jsonArray.Add(arr[i]);
+        }
+        return jsonArray;
+    }
+
+    array<uint> JsonToArray(const Json::Value &in jsonArray) {
+        array<uint> arr;
+        if (jsonArray.GetType() == Json::Type::Array) {
+            for (uint i = 0; i < jsonArray.Length; i++) {
+                arr.InsertLast(uint(jsonArray[i]));
+            }
+        } else {
+            error("Expected JSON array, got different type.");
+        }
+        return arr;
     }
 }
