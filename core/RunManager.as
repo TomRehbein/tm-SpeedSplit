@@ -17,7 +17,7 @@ namespace RunManager {
         // Detect retire
         if (!retired && post == CSmScriptPlayer::EPost::Char) {
             retired = true;
-        } else if (retired && post != CSmScriptPlayer::EPost::CarDriver) {
+        } else if (retired && post == CSmScriptPlayer::EPost::CarDriver) {
             Map::HandleReset();
             retired = false;
         }
