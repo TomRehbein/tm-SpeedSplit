@@ -2,6 +2,7 @@ void Main() {
 }
 
 void Render() {
+    Display::Render();
 }
 
 void Update(float dt) {

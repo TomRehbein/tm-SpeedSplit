@@ -57,7 +57,16 @@ namespace Display {
         UI::TableNextColumn();
         UI::Text(splitIndex + ". CP");
         UI::TableNextColumn();
+        // make the next text red if the current split is slower than the pb otherwise green
+        if (splitTime > pbTime) {
+            vec4 redColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+            UI::PushStyleColor(UI::Col::Text, redColor);
+        } else {
+            vec4 greenColor = vec4(0.0f, 1.0f, 0.0f, 1.0f);
+            UI::PushStyleColor(UI::Col::Text, greenColor);
+        }
         UI::Text("" + splitTime);
+        UI::PopStyleColor();
         UI::TableNextColumn();
         UI::Text("" + pbTime);
     }
